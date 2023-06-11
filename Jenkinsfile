@@ -4,8 +4,10 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    echo "building the image of application"
-                        sh 'docker build -t mahmoudabdelgowad/internimage:1.0 .'
+                        docker.build('my-build-image').inside("--volume=/var/run/docker.sock:/var/run/docker.sock") {
+                         
+                         sh 'docker build -t mahmoudabdelgowad/internimage:1.0 .'
+                        }
 
                     }
                 }
