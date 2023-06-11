@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mysqlDB:
+    image: mysql:latest
+    hostname: mysqlDB
+    container_name: mysqlDB
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_USER=root
+    volumes:
+      - /var/lib/mysql/data:/var
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+     
+
+
+
+  myapp:
+    image: app:1.1
+    hostname: myapp
+    container_name: myapp
+    ports:
+      - "9090:9090"
+    environment:
+      - MYSQL_HOST=mysqlDB
+      - MYSQL_USER=root
+      - MYSQL_PASS=1234
+      - MYSQL_PORT=3306
+    depends_on:
+       mysqlDB:
+          condition: service_healthy
+
+
+
+
