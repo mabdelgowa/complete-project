@@ -5,7 +5,7 @@ pipeline{
             steps{
                 script{
                     echo "building the image of application"
-                        sh 'sudo docker build -t mahmoudabdelgowad/internimage:1.0 .'
+                        sh 'docker build -t mahmoudabdelgowad/internimage:1.0 .'
 
                     }
                 }
