@@ -1,5 +1,5 @@
 FROM golang:alpine3.18
-
+ENV GO111MODULE=auto
 # Set destination for COPY
 WORKDIR /app
 
