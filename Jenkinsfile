@@ -20,7 +20,7 @@ pipeline{
             }
         }
 post {
-    always {
+        always {{
       
             if (status != null) {
                 emailext(
