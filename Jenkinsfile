@@ -25,7 +25,7 @@ post {
  
   
 
-            if (status != null) {
+           
                 emailext(
                     to: 'mabdelgowad144l@gmail.com',
                     subject: "${status}: Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'",
@@ -35,7 +35,7 @@ post {
                         <p>View console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"</p>"""
                 )
             }
-        }
+        
     }
 }
 }
