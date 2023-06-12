@@ -21,6 +21,8 @@ pipeline{
         }
 post {
     always {
+        script {
+
             if (status != null) {
                 emailext(
                     to: 'mabdelgowad144l@gmail.com',
@@ -33,5 +35,5 @@ post {
             }
         }
     }
-
+}
 }
