@@ -6,7 +6,7 @@ pipeline{
                 script{
                         
                          
-                         sh 'podman build -t mahmoudabdelgowad/internimage:1.0 .'
+                         sh 'docker build -t mahmoudabdelgowad/internimage:1.0 .'
                         
 
                     }
