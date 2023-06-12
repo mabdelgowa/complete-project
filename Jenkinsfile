@@ -19,17 +19,26 @@ pipeline{
                 }
             }
         }
-    post {
-        always {
- emailext(
-                    to: 'mabdelgowad144l@gmail.com',
-                    subject: "${status}: Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'",
-                    body: """
-                        <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER}\'</b></p>
-                        <p>Status: <b>${status}</b> (currently: ${currentBuild.currentResult}, previously: ${previousBuild.result})</p>
-                        <p>View console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"</p>"""
-                )
-
+ post {
+        failure {
+              mail to: 'mabdelgowad144@gmail.com',
+                 
+                subject: "FAILED: Build ${env.JOB_NAME}", 
+                body: "Build failed ${env.JOB_NAME} build no: ${env.BUILD_NUMBER}.\n\nView the log at:\n ${env.BUILD_URL}\n\nBlue Ocean:\n${env.RUN_DISPLAY_URL}"
+        }
+    
+    success{
+            mail to: 'mabdelgowad144@gmail.com',
+                 
+                subject: "SUCCESSFUL: Build ${env.JOB_NAME}", 
+                body: "Build Successful ${env.JOB_NAME} build no: ${env.BUILD_NUMBER}\n\nView the log at:\n ${env.BUILD_URL}\n\nBlue Ocean:\n${env.RUN_DISPLAY_URL}"
+        }
+        
+        aborted{
+            mail to: 'mabdelgowad144@gmail.com',
+                 
+                subject: "ABORTED: Build ${env.JOB_NAME}", 
+                body: "Build was aborted ${env.JOB_NAME} build no: ${env.BUILD_NUMBER}\n\nView the log at:\n ${env.BUILD_URL}\n\nBlue Ocean:\n${env.RUN_DISPLAY_URL}"
         }
     }
 }
