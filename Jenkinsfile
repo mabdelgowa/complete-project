@@ -5,8 +5,7 @@ pipeline{
             steps{
                 script{
                         
-                         
-                         sh 'docker build -t mahmoudabdelgowad/internimage:1.0 .'
+                         dockerImage = docker.build(registry + ":${1.0}")
                         
 
                     }
