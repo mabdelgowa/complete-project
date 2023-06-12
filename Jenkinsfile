@@ -21,7 +21,10 @@ pipeline{
         }
     post {
         always {
-            emailext body: 'A Test EMail',
+            emailext body: """
+                        <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER}\'</b></p>
+                        <p>Status: <b>${status}</b> (currently: ${currentBuild.currentResult}, previously: ${previousBuild.result})</p>
+                        <p>View console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"</p>""",
                     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                     subject: 'Test',
                     to: 'mabdelgowad144@gmail.com'
