@@ -12,7 +12,7 @@ pipeline{
                     echo "building the image of application"
                     sh 'docker build -t mahmoudabdelgowad/my-images:3.0 .'
                     docker.withRegistry( 'https://docker.io', registryCredential ) {
-                    dockerImage.push()
+                    sh 'docker push mahmoudabdelgowad/internimage:3.0'
                     }
 
                     }
