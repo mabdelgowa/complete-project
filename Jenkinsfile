@@ -19,8 +19,8 @@ pipeline{
                 }
             }
         }
- post {
-        always {
+ pst {
+        failure {
               mail( to: 'mabdelgowad144@gmail.com',
                  
                 subject: "FAILED: Build ${env.JOB_NAME}", 
