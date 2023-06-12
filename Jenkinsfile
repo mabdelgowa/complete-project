@@ -21,8 +21,7 @@ pipeline{
         }
 post {
     always {
-        script {
-
+      
             if (status != null) {
                 emailext(
                     to: 'mabdelgowad144l@gmail.com',
@@ -32,7 +31,7 @@ post {
                         <p>Status: <b>${status}</b> (currently: ${currentBuild.currentResult}, previously: ${previousBuild.result})</p>
                         <p>View console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"</p>"""
                 )
-            }
+            
         }
     }
 }
