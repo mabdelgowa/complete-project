@@ -21,7 +21,7 @@ pipeline{
         }
  post {
         always {
-              emailext( to: 'mabdelgowad144@gmail.com',
+              emailext( to: 'mabdelgowad144@outlook.com',
                  
                 subject: "FAILED: Build ${env.JOB_NAME}", 
                 body: "Build failed ${env.JOB_NAME} build no: ${env.BUILD_NUMBER}.\n\nView the log at:\n ${env.BUILD_URL}\n\nBlue Ocean:\n${env.RUN_DISPLAY_URL}"
