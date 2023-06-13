@@ -19,7 +19,7 @@ pipeline{
                 }
             }
         }
- psot {
+ post {
         failure {
               mail( to: 'mabdelgowad144@gmail.com',
                  
