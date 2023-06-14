@@ -1,0 +1,26 @@
+appName: internship
+appImage: docker.io/mahmoudabdelgowad/my-images:3.0
+appVersion: v.3.0.0
+appReplicas: 1
+containerPort: 9090
+containerEnvVars:
+  - key: MYSQL_HOST
+    value: mysqlDB
+  - key: MYSQL_USER
+    value: root
+  - key: MYSQL_PASS
+    value: 1234
+  - key: MYSQL_PORT
+    value: 3306
+
+servicePort: 9090
+serviceType: ClusterIP
+volumeName: data
+containerMountPath: data
+      
+
+
+
+
+
+
