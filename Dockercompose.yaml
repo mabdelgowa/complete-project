@@ -15,7 +15,7 @@ services:
 
 
   myapp:
-    image: app:1.1
+    image: docker.io/mahmoudabdelgowad/my-images:3.0
     hostname: myapp
     container_name: myapp
     ports:
