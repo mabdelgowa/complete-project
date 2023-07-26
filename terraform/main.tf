@@ -54,9 +54,9 @@ resource "aws_security_group" "myapp-sg" {
   }
   ingress {
     //to be able to connect to the ngnix container
-    from_port = 8080
+    from_port = 9090
     protocol  = "tcp"
-    to_port   = 8080
+    to_port   = 9090
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
