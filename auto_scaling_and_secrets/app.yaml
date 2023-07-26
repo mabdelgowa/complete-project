@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: app
+          image: docker.io/mahmoudabdelgowad/m-images:3.0
+          ports:
+            - containerPort: 9090
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+          env:
+              - name: MYSQL_HOST
+                value: "10.244.0.127"
+              - name: MYSQL_USER
+                value: "root"
+              - name: MYSQL_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: mysql-secret
+                    key: mysql_root_password
+              - name: MYSQL_PORT
+                value: "3306"
