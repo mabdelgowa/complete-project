@@ -26,7 +26,7 @@ pipeline{
             script{
                 dir('terraform'){
                     sh "terraform init"
-                    sh "terraform apply --ayto-approve"
+                    sh "terraform apply --auto-approve"
                 }
             }
        }
