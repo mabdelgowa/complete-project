@@ -3,7 +3,7 @@ cidr_blocks = [{cidr_block = "10.0.0.0/16", name = "myapp" },
                 {cidr_block = "10.0.50.0/24", name = "myapp"}
               ]
 
-my_ip = ["102.184.122.122/32"] // this is my public IP address
+my_ip = ["197.134.58.166/32"] // this is my public IP address
 
 env_prefix = "myapp"
 
