@@ -29,13 +29,13 @@ And exposes itself on port 9090:
   * Note: the volume of MySQL was mounted under /var/lib/mysql/data for persistent data in the database.
   
   ## 2- Jenkins
-  * Pipeline job (jenkinsfile) to build the app using dockerfile and reports if any errors happened in the build. The output of the build step is a docker     image pushed to the docker hub or any docker repo you want.
+  * Pipeline job (jenkinsfile) to build the app using dockerfile and reports if any errors happened in the build. The output of the build step is a docker     image pushed to the docker hub or any docker repo.
   * there were many issues with Jenkins
      * 1- Connecting Jenkins to Github
-     * Solution: I couldn't connect to GitHub using an ordinary password but we should g ener ate token from the developer tools to enable Jenkins to access GitHub.
+     * Solution: I couldn't connect to GitHub using an ordinary password but we should generate a token from the developer tools to enable Jenkins to access GitHub.
      * 2- Jenkins couldn't run commands which we pass in the Jenkinsfile
      * Solution: add Jenkins in /etc/subuid
-     * 3- I also couldn't send e-mails or access the Gmail account with ordinary password
+     * 3- I also couldn't send e-mails or access the Gmail account with an ordinary password
      * Solution: generating token from Gmail (app password option)
      * 4- Jenkins couldn't pass the first line in the dockerfile which was FROM golang:alpine:3.18 and the reason was that we had three main default docker repositories to pull from, and Jenkins couldn't take the decision in this case
      * Solution: modifying the line to be FROM docker.io/golang:alpi ne:3.18
@@ -65,11 +65,11 @@ And exposes itself on port 9090:
   * Run the Docker container on EC2 instance
     - Run bash script as user data to:
       - 1- install docker in the EC2 instance 
-      - 2- deploy the nginx docker container in the EC2 instance
+      - 2- deploy the docker container in the EC2 instance
      
   ## Documentation video in the following links
 
-### [Video link](https://drive.google.com/file/d/1rgRWDRta8UmR7V1WB6a1ATAmBm9Vlho6/view?usp=sharing)
+### [Video link](https://drive.google.com/file/d/1vmVnbUfnGWY7PQ7KbinXc_FO1SeMshjW/view?usp=drive_link)
 
 
 
