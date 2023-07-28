@@ -67,9 +67,7 @@ And exposes itself on port 9090:
       - 1- install docker in the EC2 instance 
       - 2- deploy the docker container in the EC2 instance
      
-  ## Documentation video in the following links
 
-### [Video link](https://drive.google.com/file/d/1vmVnbUfnGWY7PQ7KbinXc_FO1SeMshjW/view?usp=drive_link)
 
 
 
