@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-
-
 func main() {
 	http.ListenAndServe(":9090", &handler{})
 }
