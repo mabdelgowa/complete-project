@@ -14,6 +14,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-gs-ping
 
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
 EXPOSE 9090
-
 # Run
 CMD ["/docker-gs-ping"]
