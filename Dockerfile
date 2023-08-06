@@ -2,7 +2,6 @@ FROM docker.io/golang:alpine3.18
 
 # Set destination for COPY
 WORKDIR /app
-
 # Download Go modules
 COPY go.mod go.sum ./
 RUN go mod download
