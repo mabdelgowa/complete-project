@@ -22,16 +22,16 @@ pipeline{
         }
       }
     }
-    stage('provision server'){
-       steps{
-            script{
-                dir('terraform'){
-                    sh "terraform init"
-                    sh "terraform apply --auto-approve"
-                }
-            }
-       }
-    }
+   // stage('provision server'){
+   //    steps{
+   //         script{
+   //             dir('terraform'){
+   //                 sh "terraform init"
+   //                 sh "terraform apply --auto-approve"
+   //             }
+   //         }
+   //    }
+   // }
     stage('deploy'){
       steps{
         script{
