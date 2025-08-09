@@ -12,7 +12,7 @@ pipeline{
       parameters {
         choice(
             name: 'Deployment',
-            choices: ['kubernetes', 'EC2'],
+            choices: ['kubernetes', 'EC2', 'None'],
             description: 'Select the deployment environment'
         )
       }
