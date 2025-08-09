@@ -15,6 +15,7 @@ pipeline{
             choices: ['kubernetes', 'EC2'],
             description: 'Select the deployment environment'
         )
+      }
   stages{
     stage("build image"){
       steps{
