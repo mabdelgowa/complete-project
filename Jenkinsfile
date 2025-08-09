@@ -9,6 +9,12 @@ pipeline{
     KUBECONFIG = credentials('kubeconfig') 
   }
   agent any
+      parameters {
+        choice(
+            name: 'Deployment',
+            choices: ['kubernetes', 'EC2'],
+            description: 'Select the deployment environment'
+        )
   stages{
     stage("build image"){
       steps{
@@ -22,17 +28,23 @@ pipeline{
         }
       }
     }
-   // stage('provision server'){
-   //    steps{
-   //         script{
-   //             dir('terraform'){
-   //                 sh "terraform init"
-   //                 sh "terraform apply --auto-approve"
-   //             }
-   //         }
-   //    }
-   // }
+    stage('provision server'){
+        when {
+                expression { params.Deployment == 'EC2' }
+            }
+       steps{
+            script{
+                dir('terraform'){
+                    sh "terraform init"
+                    sh "terraform apply --auto-approve"
+                }
+            }
+       }
+    }
     stage('deploy'){
+      when {
+                expression { params.Deployment == 'kubernetes' }
+            }
       steps{
         script{
           sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/app.yaml'
