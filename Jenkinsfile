@@ -49,8 +49,9 @@ pipeline{
       steps{
         script{
 //          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-config.yaml'
-          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-secret.yaml'
-          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql.yaml'
+//          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-secret.yaml'
+//          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql.yaml'
+          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/app.yaml'
 
         }
       }
