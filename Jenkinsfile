@@ -48,7 +48,7 @@ pipeline{
             }
       steps{
         script{
-          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/app.yaml'
+          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/*'
         }
       }
     }
