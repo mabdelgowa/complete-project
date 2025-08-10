@@ -47,7 +47,7 @@ pipeline{
                 expression { params.Deployment == 'kubernetes' }
             }
       steps{
-         withKubeConfig([credentialsId: 'kubeconfig']){
+         withKubeConfig([credentialsId: 'kubeconfig.yaml']){
 //          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-config.yaml'
 //          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-secret.yaml'
 //          sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql.yaml'
