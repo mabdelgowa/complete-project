@@ -15,17 +15,25 @@ pipeline{
             choices: ['kubernetes', 'EC2', 'None'],
             description: 'Select the deployment environment'
         )
+	booleanParam(
+            name: 'Build_Image',
+            defaultValue: false,
+            description: 'Ask for creating new image'
+        )
       }
   stages{
     stage("build image"){
       steps{
         script{
+	if (params.Build_Image){
           echo "building the image of application"
           sh 'docker build -t mahmoudabdelgowad/my-images:3.0 .'
           docker.withRegistry( 'https://docker.io', registryCredential ) {
             sh 'docker push mahmoudabdelgowad/my-images:3.0 '
           }
-
+	 } else {
+		echo "Skiping Building Image"
+	 }
         }
       }
     }
