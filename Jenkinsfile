@@ -55,6 +55,7 @@ pipeline{
 	  //sh 'kubectl create cm sqlhost --from-literal MYSQL_HOST=$(kubectl get svc mysql-service | awk 'NR==2 {print $3}')'
           sh '''
 	     kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-secret.yaml
+	     kubectl create cm sqlhost --from-literal MYSQL_HOST=$(kubectl get svc mysql-service | awk 'NR==2 {print $3}') 	
 	       '''
 	  //sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/app.yaml'
 	  //sh 'kubectl expose deployment app-deployment   --target-port=9090 --type=NodePort --name=my-service --node-port=31738'
