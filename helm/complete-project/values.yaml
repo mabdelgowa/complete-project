@@ -1,0 +1,10 @@
+app:
+  name: myapp
+  replicas: 2
+  service: appsvc2
+sql:
+  service: mysql-service
+  name: mysql
+  secret: sql-sec
+  cm: sql-cm
+  namespace: helmtest

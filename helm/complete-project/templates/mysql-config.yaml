@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.sql.cm }}
+data:
+  database_url: {{ .Values.sql.service }}
+
+
