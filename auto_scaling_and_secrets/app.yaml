@@ -26,7 +26,10 @@ spec:
               cpu: 200m
           env:
               - name: MYSQL_HOST
-                value: "10.244.0.127"
+                valueFrom:
+                  configMapKeyRef:
+                    name: sqlhost
+                    key: MYSQL_HOST
               - name: MYSQL_USER
                 value: "root"
               - name: MYSQL_PASS
