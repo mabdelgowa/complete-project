@@ -52,7 +52,9 @@ pipeline{
              kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-config.yaml
 	     kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-secret.yaml
              kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql.yaml
-	     if kubectl get cm my-configmap >/dev/null 2>&1; then echo "Exists"; else kubectl create cm sqlhost --from-literal MYSQL_HOST=$(kubectl get svc mysql-service | awk 'NR==2 {print $3}'); fi
+	     if ! kubectl get cm my-configmap >/dev/null 2>&1; then  
+		kubectl create cm sqlhost --from-literal MYSQL_HOST=$(kubectl get svc mysql-service | awk 'NR==2 {print $3}')
+		 fi
 	     kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/app.yaml
 	     if kubectl get svc my-service >/dev/null 2>&1; then echo "Exists"; else  kubectl expose deployment app-deployment   --target-port=9090 --type=ClusterIP --name=my-service; fi
              kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/ingress.yaml
