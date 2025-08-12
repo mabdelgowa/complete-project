@@ -20,6 +20,11 @@ pipeline{
             defaultValue: false,
             description: 'Ask for creating new image'
         )
+        string(
+            name: 'DOCKER_IMAGE_VERSION',
+            defaultValue: '3.0.0',
+            description: 'Version tag for the Docker image'
+        )
       }
   stages{
     stage("build image"){
@@ -27,7 +32,7 @@ pipeline{
         script{
 	if (params.Build_Image){
           echo "building the image of application"
-          sh 'docker build -t mahmoudabdelgowad/my-images:3.0 .'
+          sh 'docker build -t mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} .'
           docker.withRegistry( 'https://docker.io', registryCredential ) {
             sh 'docker push mahmoudabdelgowad/my-images:3.0 '
           }
