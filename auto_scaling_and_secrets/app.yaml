@@ -39,3 +39,7 @@ spec:
                     key: mysql_root_password
               - name: MYSQL_PORT
                 value: "3306"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 9090

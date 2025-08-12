@@ -56,6 +56,7 @@ pipeline{
 	     kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/app.yaml
 	     kubectl expose deployment app-deployment   --target-port=9090 --type=ClusterIP --name=my-service || true
              kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/ingress.yaml
+	     kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/autoscaling.yaml || true
 	    '''
         }
       }
