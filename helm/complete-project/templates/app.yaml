@@ -43,3 +43,5 @@ spec:
             httpGet:
               path: /
               port: 9090
+            initialDelaySeconds: 15
+            periodSeconds: 5
