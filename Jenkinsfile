@@ -51,6 +51,7 @@ pipeline{
           sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-config.yaml'
           sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql-secret.yaml'
           sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/mysql.yaml'
+	  sh 'kubectl create cm sqlhost --from-literal MYSQL_HOST=$(kubectl get svc mysql-service | awk 'NR==2 {print $3}')'
           sh 'kubectl apply -f  /var/lib/jenkins/workspace/intern/auto_scaling_and_secrets/app.yaml'
 
         }
