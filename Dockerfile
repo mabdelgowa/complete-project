@@ -1,18 +1,24 @@
-FROM docker.io/golang:alpine3.18
+FROM docker.io/golang:alpine3.22
+
+RUN apk add --no-cache git
+
+RUN addgroup -S appgroup && adduser -S -h /home/newuser newuser -G appgroup
 
 # Set destination for COPY
-WORKDIR /app
+WORKDIR  /home/newuser
+USER newuser
 # Download Go modules
 COPY go.mod go.sum ./
+
 RUN go mod download
 
 # Copy the source code. Note the slash at the end, as explained in
 COPY *.go ./
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-gs-ping
+RUN CGO_ENABLED=0 GOOS=linux go build -o /home/newuser/docker-gs-ping
 
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
 EXPOSE 9090
 # Run
-CMD ["/docker-gs-ping"]
+CMD ["/home/newuser/docker-gs-ping"]
