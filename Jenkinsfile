@@ -52,21 +52,21 @@ pipeline{
 		//		}
           //  }
         //}
-	        stage('Push Image') {
-            when {
-                expression {
+	        //stage('Push Image') {
+            //when {
+             //   expression {
                     // Push only if previous stage did not fail
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                }
-            }
-            steps {
-                script {
-  						docker.withRegistry( 'https://docker.io', registryCredential ) {
-            sh 'docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
-          }
-                    }
-                }
-            }
+               //     currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                //}
+            //}
+            //steps {
+              //  script {
+  				//		docker.withRegistry( 'https://docker.io', registryCredential ) {
+            //sh 'docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
+          //}
+            //        }
+             //   }
+            //}
     stage('provision server'){
         when {
                 expression { params.Deployment == 'EC2' }
