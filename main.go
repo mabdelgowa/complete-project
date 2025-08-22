@@ -6,9 +6,6 @@ import (
 	"strconv"
 	"time"
 )
-
-
-
 func main() {
 	http.ListenAndServe(":9090", &handler{})
 }
@@ -85,7 +82,11 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		
 
 		w.Write([]byte(`OK`))
 	}
 }
+
+
+
