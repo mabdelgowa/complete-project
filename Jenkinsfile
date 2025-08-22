@@ -8,7 +8,13 @@ pipeline{
     TF_VAR_env_prefix = 'test'
     KUBECONFIG = credentials('kubeconfig') 
   }
-
+agent {
+        dockerfile {
+            filename "Dockerfile"
+            args '-p 9090:9090'
+            additionalBuildArgs "-t  docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
+        }
+    }
   agent any
       parameters {
         choice(
@@ -27,13 +33,6 @@ pipeline{
             description: 'Version tag for the Docker image'
         )
       }
-		    agent {
-        dockerfile {
-            filename "Dockerfile"
-            args '-p 9090:9090'
-            additionalBuildArgs "-t  docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
-        }
-    }
   stages{
     stage("build image"){
       steps{
