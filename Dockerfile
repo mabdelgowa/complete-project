@@ -3,7 +3,6 @@ FROM docker.io/golang:alpine3.22
 RUN apk add --no-cache git
 RUN addgroup -S appgroup && adduser -S -h /home/newuser -u 1001 newuser -G appgroup
 
-RUN rm -f /bin/sh
 # Set destination for COPY
 WORKDIR  /home/newuser
 USER newuser
