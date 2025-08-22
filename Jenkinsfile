@@ -36,7 +36,7 @@ pipeline{
           sh "docker build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ."
 		   sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
           docker.withRegistry( 'https://docker.io', registryCredential ) { 
-			   sh 'docker push docker.io/mahmoudabdelgowad/my-images:3.0.2'
+			   sh 'docker push docker.io/mahmoudabdelgowad/my-images:3.0'
           }
 	 } else {
 		echo "Skiping Building Image"
