@@ -7,7 +7,7 @@ pipeline{
     AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
     TF_VAR_env_prefix = 'test'
     KUBECONFIG = credentials('kubeconfig') 
-	DOCKER_HOST="unix:///run/podman/podman.sock"
+	DOCKER_HOST="unix:///run/podman/podman.socket"
   }
   agent any
       parameters {
