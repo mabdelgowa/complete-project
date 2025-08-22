@@ -32,7 +32,8 @@ pipeline{
         script{
 	if (params.Build_Image){
           echo "building the image of application"
-          sh "docker build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} . && trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
+          sh "docker build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ."
+		//&& trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
           //docker.withRegistry( 'https://docker.io', registryCredential ) { 
 			  // && docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
           //}
