@@ -48,6 +48,7 @@ pipeline{
                 script {
                     // Run Trivy scan and fail if Medium/High CVEs found
                     sh """
+						export DOCKER_HOST=unix:///run/podman/podman.sock
                         trivy image --exit-code 1 --severity HIGH,MEDIUM   localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}
                     """
                 }
