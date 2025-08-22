@@ -35,9 +35,15 @@ pipeline{
           echo "building the image of application"
           sh "docker build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ."
 		   sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
-          docker.withRegistry( 'https://docker.io', registryCredential ) { 
-			   sh 'docker push docker.io/mahmoudabdelgowad/my-images:3.0'
-          }
+        withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+    sh """
+	echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+	docker push docker.io/mahmoudabdelgowad/my-images:${IMAGE_TAG}
+ """
+}  
+		//docker.withRegistry( 'https://docker.io', registryCredential ) { 
+		//	   sh 'docker push docker.io/mahmoudabdelgowad/my-images:3.0'
+         // }
 	 } else {
 		echo "Skiping Building Image"
 	 }
