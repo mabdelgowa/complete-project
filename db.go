@@ -18,7 +18,6 @@ func init() {
 		Addr:                 fmt.Sprintf("%s:%s", os.Getenv("MYSQL_HOST"), os.Getenv("MYSQL_PORT")),
 		AllowNativePasswords: true,
 		ParseTime:            true,
-		DBName:               "internship",
 	}
 
 	connection, err := sql.Open("mysql", mysqlConfig.FormatDSN())
