@@ -11,71 +11,79 @@ func main() {
 	http.ListenAndServe(":9090", &handler{})
 }
 
-type handler struct{}
+type handler struct {
+}
 
 type row struct {
-	ID        int64     `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
+	id        int64
+	createdAt time.Time
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/healthcheck" {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(200)
 		w.Write([]byte(`{"status":"ok"}`))
 		return
 	}
-
 	switch r.Method {
-	case http.MethodGet:
-		rs, err := _connection.Query(`SELECT id, created_at FROM stuff`)
+	case "GET":
+		rs, err := _connection.Query(`SELECT id,created_at FROM stuff`)
 		if err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Internal Server Error"))
 			return
 		}
-		defer rs.Close()
 
 		var ret []row
 		for rs.Next() {
 			cur := row{}
-			err = rs.Scan(&cur.ID, &cur.CreatedAt)
+			err = rs.Scan(
+				&cur.id,
+				&cur.createdAt,
+			)
+
 			if err != nil {
-				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte("Internal Server Error"))
 				return
 			}
+
 			ret = append(ret, cur)
 		}
 
 		bs, err := json.Marshal(ret)
 		if err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Internal Server Error"))
 			return
 		}
-		w.Write(bs)
-
-	case http.MethodPost:
-		_, err := _connection.Exec(`INSERT INTO stuff (created_at) VALUES (NOW())`)
+		_, err = w.Write(bs)
 		if err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			panic(err)
+		}
+	case "POST":
+		_, err := _connection.Exec("INSERT INTO stuff (created_at) VALUES (NOW())")
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Internal Server Error"))
 			return
 		}
 		w.Write([]byte(`OK`))
-
-	case http.MethodPatch:
+	case "PATCH":
 		idStr := r.URL.Query().Get("id")
 		id, err := strconv.ParseInt(idStr, 10, 64)
 		if err != nil {
-			http.Error(w, "Invalid id value", http.StatusBadRequest)
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Invalid id value"))
 			return
 		}
 
 		_, err = _connection.Exec(`UPDATE stuff SET created_at=NOW() WHERE id=?`, id)
 		if err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		w.Write([]byte(`OK`))
 
-	default:
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		w.Write([]byte(`OK`))
 	}
 }
