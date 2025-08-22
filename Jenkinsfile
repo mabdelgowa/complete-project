@@ -35,7 +35,7 @@ pipeline{
           sh "docker build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ."
 		   sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
           docker.withRegistry( 'https://docker.io', registryCredential ) { 
-			   sh 'docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
+			   sh 'docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}'
           }
 	 } else {
 		echo "Skiping Building Image"
@@ -43,30 +43,6 @@ pipeline{
         }
       }
     }
-	//stage('Trivy Scan') {
-      //      steps {
-        //        script {
-                    // Run Trivy scan and fail if Medium/High CVEs found
-                    //sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/moby/buildkit"  
-					//localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
-		//		}
-          //  }
-        //}
-	        //stage('Push Image') {
-            //when {
-             //   expression {
-                    // Push only if previous stage did not fail
-               //     currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                //}
-            //}
-            //steps {
-              //  script {
-  				//		docker.withRegistry( 'https://docker.io', registryCredential ) {
-            //sh 'docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
-          //}
-            //        }
-             //   }
-            //}
     stage('provision server'){
         when {
                 expression { params.Deployment == 'EC2' }
