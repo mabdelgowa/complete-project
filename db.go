@@ -25,22 +25,24 @@ func init() {
 		panic(err)
 	}
 
-	// Ensure database exists
 	_, err = connection.Exec(`CREATE DATABASE IF NOT EXISTS internship`)
 	if err != nil {
 		panic(err)
 	}
 
-	// Reconnect but now selecting the DB
+	mysqlConfig.DBName = `internship`
+
 	if err = connection.Close(); err != nil {
 		panic(err)
 	}
+
 	connection, err = sql.Open("mysql", mysqlConfig.FormatDSN())
 	if err != nil {
 		panic(err)
 	}
 
 	_connection = connection
+
 	schema()
 }
 
@@ -49,6 +51,7 @@ func schema() {
 		id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		created_at DATETIME NOT NULL
 	)`)
+
 	if err != nil {
 		panic(err)
 	}
