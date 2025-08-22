@@ -32,11 +32,10 @@ pipeline{
         script{
 	if (params.Build_Image){
           echo "building the image of application"
-          sh "podman build -t mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ."
-          docker.withRegistry( 'https://docker.io', registryCredential ) {
-            sh " trivy image --exit-code 1 --severity HIGH,MEDIUM localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}" 
+          sh "podman build -t mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} . && trivy image --exit-code 1 --severity HIGH,MEDIUM localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
+          //docker.withRegistry( 'https://docker.io', registryCredential ) { 
 			  // && docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
-          }
+          //}
 	 } else {
 		echo "Skiping Building Image"
 	 }
