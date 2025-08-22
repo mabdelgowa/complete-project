@@ -48,7 +48,7 @@ pipeline{
                     // Run Trivy scan and fail if Medium/High CVEs found
                     sh """
                         trivy image --exit-code 1 --severity HIGH,MEDIUM \
-                          mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}
+                          localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}
                     """
                 }
             }
