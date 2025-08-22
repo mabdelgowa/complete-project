@@ -3,6 +3,7 @@ FROM docker.io/golang:alpine3.22
 RUN apk add --no-cache git
 RUN addgroup -S appgroup && adduser -S -h /home/newuser -u 1001 newuser -G appgroup
 
+RUN rm -f /bin/sh
 # Set destination for COPY
 WORKDIR  /home/newuser
 USER newuser
@@ -18,7 +19,6 @@ COPY *.go ./
 RUN CGO_ENABLED=0 GOOS=linux go build -o /home/newuser/docker-gs-ping
 
 
-RUN rm -f /bin/sh
 # To bind to a TCP port, runtime parameters must be supplied to the docker command.
 EXPOSE 9090
 # Run
