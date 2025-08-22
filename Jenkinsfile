@@ -8,13 +8,6 @@ pipeline{
     TF_VAR_env_prefix = 'test'
     KUBECONFIG = credentials('kubeconfig') 
   }
-agent {
-        dockerfile {
-            filename "Dockerfile"
-            args '-p 9090:9090'
-            additionalBuildArgs "-t  docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
-        }
-    }
   agent any
       parameters {
         choice(
@@ -39,7 +32,7 @@ agent {
         script{
 	if (params.Build_Image){
           echo "building the image of application"
-          sh "podman build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} . && trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
+          sh "docker build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} . && trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
           //docker.withRegistry( 'https://docker.io', registryCredential ) { 
 			  // && docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
           //}
