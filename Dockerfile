@@ -2,7 +2,6 @@ FROM docker.io/golang:alpine3.22
 
 RUN apk add --no-cache git
 RUN rm -f /bin/sh
-RUN rm -f /usr/bin/sh
 RUN addgroup -S appgroup && adduser -S -h /home/newuser -u 1001 newuser -G appgroup
 
 # Set destination for COPY
