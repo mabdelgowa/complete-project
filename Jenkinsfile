@@ -48,7 +48,7 @@ pipeline{
       //      steps {
         //        script {
                     // Run Trivy scan and fail if Medium/High CVEs found
-                    sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/moby/buildkit"  
+                    //sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/moby/buildkit"  
 					//localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
 		//		}
           //  }
