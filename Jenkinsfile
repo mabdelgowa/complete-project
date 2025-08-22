@@ -47,19 +47,8 @@ pipeline{
             steps {
                 script {
                     // Run Trivy scan and fail if Medium/High CVEs found
-                    //sh "trivy image --exit-code 1 --severity HIGH,MEDIUM   localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
-                                    // Run Trivy to scan the Docker image
-                    def trivyOutput = sh(script: "trivy image mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ", returnStdout: true).trim()
-
-                    // Display Trivy scan results
-                    println trivyOutput
-
-                    // Check if vulnerabilities were found
-                    if (trivyOutput.contains("Total: 0")) {
-                        echo "No vulnerabilities found in the Docker image."
-                    } else {
-                        echo "Vulnerabilities found in the Docker image."
-					}
+                    sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/moby/buildkit"  
+					//localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
 				}
             }
         }
