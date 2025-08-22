@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	// db.go runs init() automatically, so _connection is ready
 	http.ListenAndServe(":9090", &handler{})
 }
 
@@ -21,14 +20,14 @@ type row struct {
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/healthcheck" {
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"status":"ok"}`))
 		return
 	}
 
 	switch r.Method {
-	case "GET":
-		rs, err := _connection.Query(`SELECT id,created_at FROM stuff`)
+	case http.MethodGet:
+		rs, err := _connection.Query(`SELECT id, created_at FROM stuff`)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
@@ -38,10 +37,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		var ret []row
 		for rs.Next() {
 			cur := row{}
-			err = rs.Scan(
-				&cur.ID,
-				&cur.CreatedAt,
-			)
+			err = rs.Scan(&cur.ID, &cur.CreatedAt)
 			if err != nil {
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 				return
@@ -56,15 +52,15 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Write(bs)
 
-	case "POST":
-		_, err := _connection.Exec("INSERT INTO stuff (created_at) VALUES (NOW())")
+	case http.MethodPost:
+		_, err := _connection.Exec(`INSERT INTO stuff (created_at) VALUES (NOW())`)
 		if err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 		w.Write([]byte(`OK`))
 
-	case "PATCH":
+	case http.MethodPatch:
 		idStr := r.URL.Query().Get("id")
 		id, err := strconv.ParseInt(idStr, 10, 64)
 		if err != nil {
@@ -77,7 +73,9 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
-
 		w.Write([]byte(`OK`))
+
+	default:
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 	}
 }
