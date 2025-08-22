@@ -7,6 +7,7 @@ pipeline{
     AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
     TF_VAR_env_prefix = 'test'
     KUBECONFIG = credentials('kubeconfig') 
+	IMAGE_TAG = "${params.DOCKER_IMAGE_VERSION}"
   }
   agent any
       parameters {
@@ -35,7 +36,7 @@ pipeline{
           sh "docker build -t docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ."
 		   sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
           docker.withRegistry( 'https://docker.io', registryCredential ) { 
-			   sh 'docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}'
+			   sh 'docker push mahmoudabdelgowad/my-images:${IMAGE_TAG}'
           }
 	 } else {
 		echo "Skiping Building Image"
