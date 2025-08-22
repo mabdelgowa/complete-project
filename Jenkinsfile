@@ -7,7 +7,6 @@ pipeline{
     AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
     TF_VAR_env_prefix = 'test'
     KUBECONFIG = credentials('kubeconfig') 
-	//DOCKER_HOST="unix:///run/podman/podman.sock"
   }
   agent any
       parameters {
@@ -34,6 +33,7 @@ pipeline{
 	if (params.Build_Image){
           echo "building the image of application"
           sh "podman build -t mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} ."
+		sh "trivy image --exit-code 1 --severity HIGH,MEDIUM mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
         //  docker.withRegistry( 'https://docker.io', registryCredential ) {
          //   sh 'docker push mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION} '
          // }
@@ -43,15 +43,15 @@ pipeline{
         }
       }
     }
-	stage('Trivy Scan') {
-            steps {
-                script {
+	//stage('Trivy Scan') {
+      //      steps {
+        //        script {
                     // Run Trivy scan and fail if Medium/High CVEs found
                     sh "trivy image --exit-code 1 --severity HIGH,MEDIUM docker.io/moby/buildkit"  
 					//localhost/mahmoudabdelgowad/my-images:${params.DOCKER_IMAGE_VERSION}"
-				}
-            }
-        }
+		//		}
+          //  }
+        //}
 	        stage('Push Image') {
             when {
                 expression {
